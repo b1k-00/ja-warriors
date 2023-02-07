@@ -32,7 +32,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{B96D51AB-49E5-4C46-B26C-B3A7A440265F}"
 	ProjectSection(SolutionItems) = preProject
-		UsersTable.txt = UsersTable.txt
+		Create.txt = Create.txt
+		Database.txt = Database.txt
+		Drop.txt = Drop.txt
+		Seed.txt = Seed.txt
 	EndProjectSection
 EndProject
 Global

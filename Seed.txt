@@ -1,0 +1,22 @@
+USE [JAScheduler]
+GO
+
+INSERT INTO [dbo].[Users]
+           ([FirstName]
+           ,[LastName]
+           ,[MiddleName]
+           ,[Email]
+           ,[Password]
+           ,[PhoneNumber]
+           ,[Graduated]
+           ,[GraduatedDate])
+     VALUES
+           ('Libby',
+           'Blair',
+           'A',
+           'libby.blair@ruralsourcing.com',
+           'Password1',
+           '1234567890',
+           'yes',
+           '2020-05-12')
+GO
