@@ -1,3 +1,5 @@
+﻿/***** this query will drop a table (in this instance, 'Users') from the 'JAScheduler' database *****/
+
 USE [JAScheduler]
 GO
 

@@ -1,3 +1,5 @@
+﻿/***** this query will create a database called 'JAScheduler' within Microsoft SQL Server *****/
+
 USE [master]
 GO
 

@@ -1,3 +1,5 @@
+﻿/****** this query will create a table called 'Users' on the 'JAScheduler' database *****/
+
 USE [JAScheduler]
 GO
 
