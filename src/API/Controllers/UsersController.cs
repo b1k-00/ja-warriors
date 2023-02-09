@@ -2,9 +2,9 @@
 using Amazon.CognitoIdentityProvider.Model;
 using Application;
 using Application.DTOs.DadJoke;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Models;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 
