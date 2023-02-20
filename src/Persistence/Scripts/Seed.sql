@@ -1,9 +1,9 @@
-﻿-- this query will add a role into the 'Role' table
+﻿-- this query will add a role into the 'Roles' table
 
 USE [JAScheduler]
 GO
 
-INSERT INTO [dbo].[Role]
+INSERT INTO [dbo].[Roles]
            ([Name])
      VALUES
            ('Junior Associate')
@@ -11,7 +11,7 @@ GO
 
 -- I will now insert another role
 
-INSERT INTO [dbo].[Role]
+INSERT INTO [dbo].[Roles]
            ([Name])
      VALUES
            ('Cohort Leader')
@@ -22,7 +22,7 @@ GO
 USE [JAScheduler]
 GO
 
-INSERT INTO [dbo].[User]
+INSERT INTO [dbo].[Users]
            ([FirstName]
            ,[MiddleName]
            ,[LastName]
@@ -50,7 +50,7 @@ GO
 USE [JAScheduler]
 GO
 
-INSERT INTO [dbo].[User]
+INSERT INTO [dbo].[Users]
            ([FirstName]
            ,[MiddleName]
            ,[LastName]
