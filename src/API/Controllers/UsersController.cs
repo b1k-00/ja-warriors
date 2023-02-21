@@ -2,6 +2,7 @@
 using Amazon.CognitoIdentityProvider.Model;
 using Application;
 using Application.DTOs.DadJoke;
+using Application.Interfaces;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
@@ -12,44 +13,46 @@ namespace API.Controllers;
 public class UsersController : BaseApiController
 {
 
-    UserApp userApp = new UserApp();
+    IUserApp _userApp = null;
 
-    public UsersController()
+    public UsersController(IUserApp userApp)
     {
+        var test = userApp.GetUsers().Result;
+        _userApp = userApp;
     }
 
     [HttpPost("Validate")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public bool ValidateUser(string username, string password)
+    public async Task<bool> ValidateUser(string username, string password)
     {
 
-        return userApp.Validate(username, password);
+        return await _userApp.Validate(username, password);
     }
 
     [HttpGet("AllUsers")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<User>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public List<User> AllUsers()
+    public async Task<List<User>> AllUsers()
     {
-        return userApp.GetUsers();
+        return await _userApp.GetUsers();
     }
 
     [HttpPost("CreateUser")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public bool CreateUser(User user)
+    public async Task<bool> CreateUser(User user)
     {
 
-        return userApp.CreateUser(user);
+        return await _userApp.CreateUser(user);
     }
 
     [HttpPost("Delete")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public bool DeleteUser(string username)
+    public async Task<bool> DeleteUser(string username)
     {
-        return userApp.DeleteUser(username);
+        return await _userApp.DeleteUser(username);
 
     }
 }

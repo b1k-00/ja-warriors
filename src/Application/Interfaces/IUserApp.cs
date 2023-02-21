@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace Application.Interfaces;
 public interface IUserApp
 {
-    bool Validate(string username, string password);
+    Task<bool> Validate(string username, string password);
 
-    bool CreateUser(User user);
+    Task<bool> CreateUser(User user);
 
-    bool DeleteUser(string username);
-    List<User> GetUsers();
+    Task<bool> DeleteUser(string username);
+    Task<List<User>> GetUsers();
 
 }

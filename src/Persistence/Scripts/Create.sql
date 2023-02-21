@@ -34,15 +34,15 @@ GO
 
 CREATE TABLE [dbo].[Users](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[FirstName] [varchar](50) NULL,
+	[FirstName] [varchar](50) NOT NULL,
 	[MiddleName] [varchar](50) NULL,
-	[LastName] [varchar](50) NULL,
-	[Email] [varchar](100) NULL,
-	[Password] [varchar](50) NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[Email] [varchar](100) NOT NULL,
+	[Password] [varchar](50) NOT NULL,
 	[PhoneNumber] [varchar](22) NULL,
-	[Graduated] [bit] NULL,
+	[Graduated] [bit] NOT NULL,
 	[GraduatedDate] [date] NULL,
-	[RoleId] [int] NULL,
+	[RoleId] [int] NOT NULL,
  CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
