@@ -1,10 +1,14 @@
 using API;
 using Application;
+using Application.Interfaces;
+using Application.Persistence;
+using Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using Persistence.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +37,9 @@ builder.Services.AddCors(options =>
 
 //This adds Amazon Cognito as the Identity Provider
 builder.Services.AddCognitoIdentity();
+
+builder.Services.AddScoped<IUserApp, UserApp>();
+builder.Services.AddScoped<IGenericRepository<User>, UserRepository>();
 
 //Configure our authentication services to use Amazon Cognito
 builder.Services.AddAuthentication(options =>
