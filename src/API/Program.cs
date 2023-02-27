@@ -40,6 +40,8 @@ builder.Services.AddCognitoIdentity();
 
 builder.Services.AddScoped<IUserApp, UserApp>();
 builder.Services.AddScoped<IGenericRepository<User>, UserRepository>();
+builder.Services.AddScoped<IMeetingApp, MeetingApp>();
+builder.Services.AddScoped<IGenericRepository<Meeting>, MeetingRepository>();
 
 //Configure our authentication services to use Amazon Cognito
 builder.Services.AddAuthentication(options =>
