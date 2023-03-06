@@ -51,18 +51,6 @@ public class MeetingApp : IMeetingApp
     }
     public async Task<List<Meeting>> GetMeetings()
     {
-        try
-        {
-            var test0 = _meetingRepo.GetAllAsync().Result;
-            var test1 = (await _meetingRepo.GetAllAsync());
-            var test = (await _meetingRepo.GetAllAsync()).ToList<Meeting>();
-
-        }
-        catch (Exception ex)
-        {
-            var stop = 1;
-        }
-
         return (await _meetingRepo.GetAllAsync()).ToList<Meeting>();
     }
 }
