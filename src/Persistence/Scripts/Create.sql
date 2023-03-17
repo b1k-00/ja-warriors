@@ -1,37 +1,82 @@
-﻿-- This query will create a table "Roles" in the "JAScheduler" database
-
-USE [JAScheduler]
+﻿USE [JAScheduler]
 GO
-
-/****** Object:  Table [dbo].[Roles]    Script Date: 2/14/2023 11:23:28 AM ******/
+/****** Object:  Table [dbo].[Availabilities]    Script Date: 3/14/2023 10:16:02 AM ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
-CREATE TABLE [dbo].[Roles](
+CREATE TABLE [dbo].[Availabilities](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](500) NULL,
- CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
+	[StartTime] [varchar](500) NULL,
+	[EndTime] [varchar](500) NULL,
+	[DayOfTheWeek] [int] NULL,
+ CONSTRAINT [PK_Availabilities] PRIMARY KEY CLUSTERED
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** this query will create a table called 'Users' on the 'JAScheduler' database *****/
-
 USE [JAScheduler]
 GO
-
-/****** Object:  Table [dbo].[Users]    Script Date: 2/14/2023 11:22:13 AM ******/
+/****** Object:  Table [dbo].[Regions]    Script Date: 3/14/2023 10:38:36 AM ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
+CREATE TABLE [dbo].[Regions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+ CONSTRAINT [PK_Region] PRIMARY KEY CLUSTERED
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+USE [JAScheduler]
+GO
+/****** Object:  Table [dbo].[Roles]    Script Date: 3/14/2023 10:39:04 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Roles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](500) NULL,
+ CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+USE [JAScheduler]
+GO
+/****** Object:  Table [dbo].[DesignStudios]    Script Date: 3/14/2023 10:32:32 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DesignStudios](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+	[RegionId] [int] NULL,
+ CONSTRAINT [PK_DesignStudios] PRIMARY KEY CLUSTERED
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[DesignStudios]  WITH CHECK ADD  CONSTRAINT [FK_DesignStudios_Regions] FOREIGN KEY([RegionId])
+REFERENCES [dbo].[Regions] ([Id])
+GO
+ALTER TABLE [dbo].[DesignStudios] CHECK CONSTRAINT [FK_DesignStudios_Regions]
+GO
+USE [JAScheduler]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 3/14/2023 10:41:43 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[Users](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[FirstName] [varchar](50) NOT NULL,
@@ -43,50 +88,52 @@ CREATE TABLE [dbo].[Users](
 	[Graduated] [bit] NOT NULL,
 	[GraduatedDate] [date] NULL,
 	[RoleId] [int] NOT NULL,
- CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+	[DesignStudiosId] [int] NOT NULL
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
 ALTER TABLE [dbo].[Users]  WITH CHECK ADD FOREIGN KEY([RoleId])
 REFERENCES [dbo].[Roles] ([Id])
 GO
-
-CREATE TABLE [dbo].[Meetings](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](500) NULL,
-	[StartDate] [datetime] NULL,
-	[EndDate] [datetime] NULL,
- CONSTRAINT [PK_Meetings] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD FOREIGN KEY([DesignStudiosId])
+REFERENCES [dbo].[DesignStudios] ([Id])
 GO
-
-CREATE TABLE [dbo].[UserMeetings](
+USE [JAScheduler]
+GO
+/****** Object:  Table [dbo].[UserAvailabilities]    Script Date: 3/14/2023 10:39:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserAvailabilities](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[UserId] [int] NULL,
-	[MeetingId] [int] NULL,
- CONSTRAINT [PK_UserMeetings] PRIMARY KEY CLUSTERED 
+	[AvailabilityId] [int] NULL,
+ CONSTRAINT [PK_UserAvailabilities] PRIMARY KEY CLUSTERED
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-ALTER TABLE [dbo].[UserMeetings]  WITH CHECK ADD  CONSTRAINT [FK_UserMeetings_Meetings] FOREIGN KEY([MeetingId])
-REFERENCES [dbo].[Meetings] ([Id])
+ALTER TABLE [dbo].[UserAvailabilities]  WITH CHECK ADD  CONSTRAINT [FK_UserAvailabilities_Availabilities] FOREIGN KEY([AvailabilityId])
+REFERENCES [dbo].[Availabilities] ([Id])
 GO
-
-ALTER TABLE [dbo].[UserMeetings] CHECK CONSTRAINT [FK_UserMeetings_Meetings]
+ALTER TABLE [dbo].[UserAvailabilities] CHECK CONSTRAINT [FK_UserAvailabilities_Availabilities]
 GO
-
-ALTER TABLE [dbo].[UserMeetings]  WITH CHECK ADD  CONSTRAINT [FK_UserMeetings_Users] FOREIGN KEY([UserId])
+ALTER TABLE [dbo].[UserAvailabilities]  WITH CHECK ADD  CONSTRAINT [FK_UserAvailabilities_Users] FOREIGN KEY([UserId])
 REFERENCES [dbo].[Users] ([Id])
 GO
-
-ALTER TABLE [dbo].[UserMeetings] CHECK CONSTRAINT [FK_UserMeetings_Users]
+ALTER TABLE [dbo].[UserAvailabilities] CHECK CONSTRAINT [FK_UserAvailabilities_Users]
 GO
+
+
+
+
+
+
+
+
+
