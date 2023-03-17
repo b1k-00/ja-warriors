@@ -26,7 +26,11 @@ public class JuniorAssociateDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
 
-    public DbSet<Meeting> Meetings { get; set; }
+    public DbSet<Availability> Availabilities { get; set; }
+
+    public DbSet<Region> Regions { get; set; }
+
+    public DbSet<DesignStudio> DesignStudios { get; set; }
 
     #endregion
 }

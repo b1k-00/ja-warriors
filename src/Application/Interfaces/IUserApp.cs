@@ -12,7 +12,13 @@ public interface IUserApp
 
     Task<bool> CreateUser(User user);
 
+    Task<string> UpdateUser(User user);
+
     Task<bool> DeleteUser(string username);
     Task<List<User>> GetUsers();
+
+    Task<List<User>> GetUserByDesignStudio(int designStudioId);
+
+    Task<User> GetUser(int id);
 
 }
