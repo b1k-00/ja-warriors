@@ -1,10 +1,15 @@
 using API;
 using Application;
+using Application.Interfaces;
+using Application.Persistence;
+using Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using Persistence.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,23 +37,33 @@ builder.Services.AddCors(options =>
     });
 
 //This adds Amazon Cognito as the Identity Provider
-builder.Services.AddCognitoIdentity();
+//builder.Services.AddCognitoIdentity();
+
+builder.Services.AddDbContext<JuniorAssociateDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("JuniorAssociateDb")), ServiceLifetime.Scoped);
+
+builder.Services.AddScoped<IGenericRepository<User>, UserRepository>();
+builder.Services.AddScoped<IGenericRepository<Meeting>, MeetingRepository>();
+
+
+builder.Services.AddScoped<IUserApp, UserApp>();
+builder.Services.AddScoped<IMeetingApp, MeetingApp>();
 
 //Configure our authentication services to use Amazon Cognito
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.Authority = builder.Configuration["AWS:CognitoAuthority"];
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        ValidateAudience = false
-    };
-});
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//})
+//.AddJwtBearer(options =>
+//{
+//    options.Authority = builder.Configuration["AWS:CognitoAuthority"];
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuerSigningKey = true,
+//        ValidateAudience = false
+//    };
+//});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -56,59 +71,60 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Junior Associate .Net API V1", Version = "v1" });
-    options.EnableAnnotations();
-    options.SchemaFilter<CleanUpDtoSchemaFilter>();
-    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-    {
-        Type = SecuritySchemeType.OAuth2,
-        Flows = new OpenApiOAuthFlows
-        {
-            Implicit = new OpenApiOAuthFlow
-            {
-                AuthorizationUrl = new System.Uri($"{cognitoAuthority}/oauth2/default/v1/authorize"),
-                TokenUrl = new System.Uri($"{cognitoAuthority}/oauth2/default/v1/token"),
-            }
-        }
-    });
+    //options.EnableAnnotations();
+    //options.SchemaFilter<CleanUpDtoSchemaFilter>();
+    //options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    //{
+    //    Type = SecuritySchemeType.OAuth2,
+    //    Flows = new OpenApiOAuthFlows
+    //    {
+    //        Implicit = new OpenApiOAuthFlow
+    //        {
+    //            AuthorizationUrl = new System.Uri($"{cognitoAuthority}/oauth2/default/v1/authorize"),
+    //            TokenUrl = new System.Uri($"{cognitoAuthority}/oauth2/default/v1/token"),
+    //        }
+    //    }
+    //});
 
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "oauth2"
-                }
-            },
-            new[] { "readAccess", "writeAccess" }
-        }
-    });
+    //options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    //{
+    //    {
+    //        new OpenApiSecurityScheme {
+    //            Reference = new OpenApiReference
+    //            {
+    //                Type = ReferenceType.SecurityScheme,
+    //                Id = "oauth2"
+    //            }
+    //        },
+    //        new[] { "readAccess", "writeAccess" }
+    //    }
+    //});
 });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger(new SwaggerOptions());
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Junior Associate .Net API V1");
-        options.OAuthClientId(builder.Configuration["AWS:UserPoolClientId"]);
-        options.OAuthUseBasicAuthenticationWithAccessCodeGrant();
-        options.OAuthAppName("Swagger UI");
-        options.OAuthScopeSeparator($"openid profile email");
-        options.OAuthAdditionalQueryStringParams(new Dictionary<string, string> { { "nonce", "nonce" } });
-    });
-}
+app.UseSwaggerUI();
+    //app.UseSwaggerUI(options =>
+    //{
+    //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Junior Associate .Net API V1");
+    //    options.OAuthClientId(builder.Configuration["AWS:UserPoolClientId"]);
+    //    options.OAuthUseBasicAuthenticationWithAccessCodeGrant();
+    //    options.OAuthAppName("Swagger UI");
+    //    options.OAuthScopeSeparator($"openid profile email");
+    //    options.OAuthAdditionalQueryStringParams(new Dictionary<string, string> { { "nonce", "nonce" } });
+    //});
+//}
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+//app.UseAuthentication();
+//app.UseAuthorization();
 
-app.UseCors("CorsPolicy");
+//app.UseCors("CorsPolicy");
 
 app.MapControllers();
 

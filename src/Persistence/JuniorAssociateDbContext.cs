@@ -24,5 +24,9 @@ public class JuniorAssociateDbContext : DbContext
 
     public DbSet<DadJoke> DadJokes { get; set; }
 
+    public DbSet<User> Users { get; set; }
+
+    public DbSet<Meeting> Meetings { get; set; }
+
     #endregion
 }
