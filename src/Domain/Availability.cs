@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain;
-public class Role
+public class Availability
 {
-    public ICollection<User> Users { get; set; }
     public int Id { get; set; }
-    public string Name { get; set; }
+
+    public string startTime { get; set; }
+    public string EndTime { get; set; }
+
+    public int? DayOfTheWeek { get; set; }
+
 }

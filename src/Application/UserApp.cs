@@ -11,28 +11,40 @@ using Domain;
 namespace Application;
 public class UserApp : IUserApp
 {
-
-    //List<User> users = new List<User>();
     public IGenericRepository<User> _userRepo { get; set; }
-
-
-
-
     public UserApp(IGenericRepository<User> userRepo)
     {
-        _userRepo= userRepo;
+        _userRepo = userRepo;
 
     }
     public async Task<bool> CreateUser(User user)
     {
         var users = await _userRepo.GetAllAsync();
-        var result = false;
+        var result = true;
 
-        if (!users.Contains(user))
-        { 
+        if (!users.Select(x => x.Email).Contains(user.Email))
+        {
             await _userRepo.AddAsync(user);
-            result = true;
+            result = false;
         }
+        return result;
+
+    }
+
+    public async Task<string> UpdateUser(User user)
+    {
+        var result = "Updated Successfully";
+        try
+        {
+
+            await _userRepo.UpdateAsync(user);
+        }
+
+        catch (Exception ex)
+        {
+            result = "Update Failed";
+        }
+
         return result;
 
     }
@@ -46,19 +58,18 @@ public class UserApp : IUserApp
         {
             if (user.Email == username)
             {
-                //await _userRepo.DeleteAsync(user.Id);
+                await _userRepo.DeleteAsync(user.Id);
                 result = true;
             }
         }
         return result;
-
     }
 
     public async Task<List<User>> GetUsers()
     {
         try
         {
-            var test0 =  _userRepo.GetAllAsync().Result;
+            var test0 = _userRepo.GetAllAsync().Result;
             var test1 = (await _userRepo.GetAllAsync());
             var test = (await _userRepo.GetAllAsync()).ToList<User>();
 
@@ -67,7 +78,7 @@ public class UserApp : IUserApp
         {
             var stop = 1;
         }
-        
+
         return (await _userRepo.GetAllAsync()).ToList<User>();
     }
 
@@ -91,6 +102,29 @@ public class UserApp : IUserApp
 
         return result;
 
+    }
+
+
+    public async Task<List<User>> GetUserByDesignStudio(int designStudioId)
+    {
+        try
+        {
+            var test0 = _userRepo.GetAllAsync().Result;
+            var test1 = (await _userRepo.GetAllAsync()).Where(x => x.DesignStudiosId == designStudioId).ToList<User>();
+            var test3 = (await _userRepo.GetAllAsync()).ToList<User>();
+        }
+        catch (Exception ex)
+        {
+            var stop = 1;
+        }
+
+        return (await _userRepo.GetAllAsync()).Where(x => x.DesignStudiosId == designStudioId).ToList<User>();
+    }
+
+    public async Task<User> GetUser(int id)
+    {
+        var user = await _userRepo.GetAsync(id);
+        return user;
     }
 
 }

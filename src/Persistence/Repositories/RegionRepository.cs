@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Persistence.Repositories;
-public class MeetingRepository : GenericRepository<Meeting>
+
+public class RegionRepository : GenericRepository<Region>
 {
     private readonly JuniorAssociateDbContext _dbContext;
 
-    public MeetingRepository(JuniorAssociateDbContext dbContext) : base(dbContext)
+    public RegionRepository(JuniorAssociateDbContext dbContext) : base(dbContext)
     {
         _dbContext = dbContext;
     }
