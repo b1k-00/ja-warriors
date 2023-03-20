@@ -17,6 +17,7 @@ public class AvailabilityApp : IAvailabilityApp
     public IGenericRepository<User> _userRepo { get; set; }
 
 
+    // Put in Order
     public AvailabilityApp(IGenericRepository<Availability> availabilityRepo, IGenericRepository<User> userRepo,
         IGenericRepository<UserAvailability> userAvailabilityRepo)
     {
