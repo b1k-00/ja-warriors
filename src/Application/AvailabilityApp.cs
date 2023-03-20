@@ -12,13 +12,13 @@ public class AvailabilityApp : IAvailabilityApp
 {
     public IGenericRepository<Availability> _availabilityRepo { get; set; }
 
-    public IUserAvailabilityRepository _userAvailabilityRepo { get; set; }
+    public IGenericRepository<UserAvailability> _userAvailabilityRepo { get; set; }
 
     public IGenericRepository<User> _userRepo { get; set; }
 
 
     public AvailabilityApp(IGenericRepository<Availability> availabilityRepo, IGenericRepository<User> userRepo,
-        IUserAvailabilityRepository userAvailabilityRepo)
+        IGenericRepository<UserAvailability> userAvailabilityRepo)
     {
         _availabilityRepo = availabilityRepo;
 
@@ -57,22 +57,6 @@ public class AvailabilityApp : IAvailabilityApp
             result = new List<UserAvailability> { };
         }
         return result;
-    }
-
-    public async Task<List<UserAvailability>> GetAvailabilitybyUser(int UserId)
-    {
-        List<UserAvailability> result = new List<UserAvailability>();
-        try
-        {
-            result = (await _userAvailabilityRepo.GetAllAsync()).Where(x => x.UserId == UserId).ToList<UserAvailability>();
-        }
-        catch (Exception ex)
-        {
-            result = new List<UserAvailability> { };
-        }
-
-        return result;
-
     }
 
     public async Task<List<Availability>> GetAvailabilitybyTime(string startTime, string endTime)

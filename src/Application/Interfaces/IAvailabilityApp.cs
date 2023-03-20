@@ -26,6 +26,5 @@ public interface IAvailabilityApp
 
     Task<Availability> GetAvailabilityId(int id);
 
-    Task<List<UserAvailability>> GetAvailabilitybyUser(int UserId);
 
 }

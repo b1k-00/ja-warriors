@@ -129,7 +129,7 @@ public class AvailabilityAppTests
 
         }).Returns(Task.CompletedTask);
 
-        var mockUserAvailabilityRepo = new Mock<IUserAvailabilityRepository>();
+        var mockUserAvailabilityRepo = new Mock<IGenericRepository<UserAvailability>>();
 
 
         mockUserAvailabilityRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(() => userAvailabilities);

@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.Interfaces;
+using Application.Persistence;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +10,13 @@ public class AvailabilityController : BaseApiController
 {
     IAvailabilityApp _availabilityApp = null;
 
-    IAvailabilityApp _userAvailabilityApp = null;
+    IUserAvailabilityApp _userAvailabilityApp = null;
 
-    public AvailabilityController(IAvailabilityApp availabilityApp)
+    public AvailabilityController(IAvailabilityApp availabilityApp, IUserAvailabilityApp userAvailabilityApp)
     {
         _availabilityApp = availabilityApp;
+
+        _userAvailabilityApp = userAvailabilityApp;
     }
 
     [HttpPost("CreateAvailability")]
@@ -53,9 +56,9 @@ public class AvailabilityController : BaseApiController
     [HttpGet("GetAvailabilityByTime")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Availability>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<List<Availability>> GetAvailabilitybyTime(string StartTime, string EndTime) //TODO
+    public async Task<List<Availability>> GetAvailabilitybyTime(string startTime, string endTime) //TODO
     {
-        return await _availabilityApp.GetAvailabilitybyTime(StartTime, EndTime);
+        return await _availabilityApp.GetAvailabilitybyTime(startTime, endTime);
     }
 
 
@@ -70,9 +73,9 @@ public class AvailabilityController : BaseApiController
     [HttpGet("AvailabilitybyUserId")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserAvailability>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<List<UserAvailability>> GetAvailabilitybyUser(int UserId)
+    public async Task<List<UserAvailability>> GetAvailabilitybyUser(int userId)
     {
-        return await _userAvailabilityApp.GetAvailabilitybyUser(UserId);
+        return await _userAvailabilityApp.GetAvailabilitybyUser(userId);
     }
 
 }
