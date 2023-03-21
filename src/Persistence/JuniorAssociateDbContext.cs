@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Persistence;
 
@@ -31,6 +32,8 @@ public class JuniorAssociateDbContext : DbContext
     public DbSet<Region> Regions { get; set; }
 
     public DbSet<DesignStudio> DesignStudios { get; set; }
+
+    public DbSet<UserAvailability> UserAvailabilities { get; set; }
 
     #endregion
 }

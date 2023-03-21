@@ -129,7 +129,7 @@ public class AvailabilityAppTests
 
         }).Returns(Task.CompletedTask);
 
-        var mockUserAvailabilityRepo = new Mock<IUserAvailabilityRepository>();
+        var mockUserAvailabilityRepo = new Mock<IGenericRepository<UserAvailability>>();
 
 
         mockUserAvailabilityRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(() => userAvailabilities);
@@ -185,10 +185,10 @@ public class AvailabilityAppTests
         var expectedResult = 4;
 
         // Act
-        _app.CreateAvailability(newAvailability);
+        ((IApp<Availability>)_app).Create(newAvailability);
 
         // Assert
-        var finalCount = _app.GetAvailabilities().Result.Count();
+        var finalCount = ((IApp<Availability>)_app).GetAll().Result.Count();
 
         Assert.Equal(expectedResult, finalCount);
     }
@@ -200,10 +200,10 @@ public class AvailabilityAppTests
         var expectedCount = 3;
 
         // Act
-        var addAvailability = _app.CreateAvailability(_availabilities[0]);
+        var addAvailability = ((IApp<Availability>)_app).Create(_availabilities[0]);
 
         // Assert
-        var finalCount = _app.GetAvailabilities().Result.Count();
+        var finalCount = ((IApp<Availability>)_app).GetAll().Result.Count();
 
         Assert.Equal(expectedCount, finalCount);
     }
@@ -215,10 +215,10 @@ public class AvailabilityAppTests
         var wrongCount = 4;
 
         // Act
-        var addAvailability = _app.CreateAvailability(_availabilities[0]);
+        var addAvailability = ((IApp<Availability>)_app).Create(_availabilities[0]);
 
         // Assert
-        var finalCount = _app.GetAvailabilities().Result.Count();
+        var finalCount = ((IApp<Availability>)_app).GetAll().Result.Count();
 
         Assert.NotEqual(wrongCount, finalCount);
     }
@@ -230,11 +230,11 @@ public class AvailabilityAppTests
         var expectedCount = 4;
 
         // Act
-        var initialCount = (_app.GetAvailabilities().Result.Count);
+        var initialCount = (((IApp<Availability>)_app).GetAll().Result.Count);
 
-        _app.CreateAvailability(newAvailability);
+        ((IApp<Availability>)_app).Create(newAvailability);
 
-        var finalCount = _app.GetAvailabilities().Result.Count;
+        var finalCount = ((IApp<Availability>)_app).GetAll().Result.Count;
 
         // Assert
         Assert.NotEqual(initialCount, finalCount);
@@ -244,11 +244,11 @@ public class AvailabilityAppTests
     public void RemoveAvailability_Success()
     {
         // Arrange
-        var initialCount = _app.GetAvailabilities().Result.Count;
+        var initialCount = ((IApp<Availability>)_app).GetAll().Result.Count;
 
         // Act
-        var deleteAvailability = _app.DeleteAvailability(_availabilities[0].Id);
-        var finalCount = _app.GetAvailabilities().Result.Count;
+        var deleteAvailability = ((IApp<Availability>)_app).Delete(_availabilities[0].Id);
+        var finalCount = ((IApp<Availability>)_app).GetAll().Result.Count;
 
         // Assert
         Assert.Equal(finalCount, (initialCount - 1));
@@ -258,11 +258,11 @@ public class AvailabilityAppTests
     public void RemoveAvailability_Failure()
     {
         // Arrange
-        var initialCount = _app.GetAvailabilities().Result.Count;
+        var initialCount = ((IApp<Availability>)_app).GetAll().Result.Count;
 
         // Act
-        var deleteAvailability = _app.DeleteAvailability(_availabilities[0].Id);
-        var finalCount = _app.GetAvailabilities().Result.Count;
+        var deleteAvailability = ((IApp<Availability>)_app).Delete(_availabilities[0].Id);
+        var finalCount = ((IApp<Availability>)_app).GetAll().Result.Count;
 
         // Assert
         Assert.NotEqual(initialCount, finalCount);
@@ -275,8 +275,8 @@ public class AvailabilityAppTests
         var expectedCount = 3;
 
         // Act
-        var repoCount = _app.GetAvailabilities().Result.Count;
-        var mockAvailabilities = _app.GetAvailabilities().Result;
+        var repoCount = ((IApp<Availability>)_app).GetAll().Result.Count;
+        var mockAvailabilities = ((IApp<Availability>)_app).GetAll().Result;
 
         // Assert
         Assert.Equal(expectedCount, repoCount);
@@ -289,7 +289,7 @@ public class AvailabilityAppTests
         var expectedId = 1;
         
         // Act
-        var repoId = _app.GetAvailabilityId(_availabilities[0].Id).Result;
+        var repoId = ((IApp<Availability>)_app).Get(_availabilities[0].Id).Result;
         
         // Assert
         Assert.Equal(newAvailability, repoId);
@@ -299,10 +299,10 @@ public class AvailabilityAppTests
     public void UpdateAvailability_Success()
     {
         // Arrange
-        var updated = _app.UpdateAvailability(_availabilities[0]);
+        var updated = ((IApp<Availability>)_app).Update(_availabilities[0]);
 
         // Act
-        var availabilityUpdate = _app.UpdateAvailability(_availabilities[0]).Result.ToString();
+        var availabilityUpdate = ((IApp<Availability>)_app).Update(_availabilities[0]).Result.ToString();
 
         // Assert
         Assert.Equal(availabilityUpdate, "Updated Successfully");
