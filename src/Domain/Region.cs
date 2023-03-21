@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain;
-public class Region
+public class Region : BaseEntity
 {
-    public int Id { get; set; }
     public string? Name { get; set; }
 }

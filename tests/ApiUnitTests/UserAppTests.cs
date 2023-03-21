@@ -172,11 +172,11 @@ public class UserAppTests
     public async void RemoveUser_Success()
     {
         // Arrange
-        var initialCount = _app.GetUsers().Result.Count;
+        var initialCount = ((IApp<User>)_app).GetAll().Result.Count;
 
         // Act
-        var deleteUser = _app.DeleteUser(_users[0].Email);
-        var finalCount = _app.GetUsers().Result.Count;
+        var deleteUser = ((IApp<User>)_app).Delete(_users[0].Id);
+        var finalCount = ((IApp<User>)_app).GetAll().Result.Count;
 
         // Assert
         Assert.Equal(finalCount, (initialCount - 1));
@@ -186,11 +186,11 @@ public class UserAppTests
     public void RemoveUser_Failure()
     {
         // Arrange
-        var initialCount = _app.GetUsers().Result.Count;
+        var initialCount = ((IApp<User>)_app).GetAll().Result.Count;
 
         // Act
-        var deleteUser = _app.DeleteUser(_users[0].Email);
-        var finalCount = _app.GetUsers().Result.Count;
+        var deleteUser = ((IApp<User>)_app).Delete(_users[0].Id);
+        var finalCount = ((IApp<User>)_app).GetAll().Result.Count;
 
         // Assert
         Assert.NotEqual(initialCount, finalCount);
@@ -205,8 +205,8 @@ public class UserAppTests
         var expectedCount = 2;
 
         // Act        
-        var repoCount = _app.GetUsers().Result.Count;
-        var mockUsers = _app.GetUsers().Result;
+        var repoCount = ((IApp<User>)_app).GetAll().Result.Count;
+        var mockUsers = ((IApp<User>)_app).GetAll().Result;
 
         // Assert
         Assert.Equal(expectedCount, repoCount);
@@ -219,11 +219,11 @@ public class UserAppTests
         var expectedCount = 3;
 
         // Arrange
-        var initialCount = (_app.GetUsers().Result.Count);
+        var initialCount = (((IApp<User>)_app).GetAll().Result.Count);
 
-        _app.CreateUser(user);
+        ((IApp<User>)_app).Create(user);
         
-        var finalCount = _app.GetUsers().Result.Count;
+        var finalCount = ((IApp<User>)_app).GetAll().Result.Count;
 
         // Assert
         Assert.NotEqual(initialCount, finalCount);
@@ -238,10 +238,10 @@ public class UserAppTests
         var expectedCount = 2;
 
         // Act
-        var addUser = _app.CreateUser(_users[0]);
+        var addUser = ((IApp<User>)_app).Create(_users[0]);
 
         // Assert 
-        var finalCount = _app.GetUsers().Result.Count();
+        var finalCount = ((IApp<User>)_app).GetAll().Result.Count();
 
         Assert.Equal(expectedCount, finalCount);
 
@@ -254,10 +254,10 @@ public class UserAppTests
         var wrongCount = 3;
 
         // Act
-        var addUser = _app.CreateUser(_users[0]);
+        var addUser = ((IApp<User>)_app).Create(_users[0]);
 
         // Assert 
-        var finalCount = _app.GetUsers().Result.Count();
+        var finalCount = ((IApp<User>)_app).GetAll().Result.Count();
 
         Assert.NotEqual(wrongCount, finalCount);
 
@@ -269,7 +269,7 @@ public class UserAppTests
 
 
         // Arrange 
-        var user = _app.GetUsers().Result[0];
+        var user = ((IApp<User>)_app).GetAll().Result[0];
         var expected = false;
 
         // Act
@@ -300,10 +300,10 @@ public class UserAppTests
     public void UpdateUser_Success()
     {
         // Arrange
-        var updated = _app.UpdateUser(_users[0]);
+        var updated = ((IApp<User>)_app).Update(_users[0]);
 
         // Act
-        var userUpdate = _app.UpdateUser(_users[0]).Result;
+        var userUpdate = ((IApp<User>)_app).Update(_users[0]).Result;
 
         // Assert
         Assert.Equal(userUpdate, "Updated Successfully");
@@ -317,7 +317,7 @@ public class UserAppTests
         var expectedId = 1;
 
         // Act
-        var userId = _app.GetUser(_users[0].Id).Result;
+        var userId = ((IApp<User>)_app).Get(_users[0].Id).Result;
 
         // Assert
         Assert.Equal(user, userId);

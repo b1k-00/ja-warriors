@@ -192,8 +192,8 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
         var expectedCount = 5;
 
         // Act        
-        var repoCount = _regionapp.GetAllRegions().Result.Count;
-        var mockRegion = _regionapp.GetAllRegions().Result;
+        var repoCount = ((IApp<Region>)_regionapp).GetAll().Result.Count;
+        var mockRegion = ((IApp<Region>)_regionapp).GetAll().Result;
 
         // Assert
         Assert.Equal(expectedCount, repoCount);
@@ -207,10 +207,10 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
         var expectedCount = 5;
 
         // Act
-        var addRegion = _regionapp.CreateRegion(_regions[0]);
+        var addRegion = ((IApp<Region>)_regionapp).Create(_regions[0]);
 
         // Assert 
-        var finalCount = _regionapp.GetAllRegions().Result.Count();
+        var finalCount = ((IApp<Region>)_regionapp).GetAll().Result.Count();
 
         Assert.Equal(expectedCount, finalCount);
 
@@ -224,10 +224,10 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
         var expectedCount = 8;
 
         // Act
-        var addDesignCenter = _designStudioApp.CreateDesignStudio(_designStudios[0]);
+        var addDesignCenter = ((IApp<DesignStudio>)_designStudioApp).Create(_designStudios[0]);
 
         // Assert 
-        var finalCount = _designStudioApp.GetDesignStudios().Result.Count();
+        var finalCount = ((IApp<DesignStudio>)_designStudioApp).GetAll().Result.Count();
 
         Assert.Equal(expectedCount, finalCount);
 
@@ -242,8 +242,8 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
         var expectedCount = 8;
 
         // Act        
-        var designCount = _designStudioApp.GetDesignStudios().Result.Count;
-        var mockDesignCenter = _designStudioApp.GetDesignStudios().Result;
+        var designCount = ((IApp<DesignStudio>)_designStudioApp).GetAll().Result.Count;
+        var mockDesignCenter = ((IApp<DesignStudio>)_designStudioApp).GetAll().Result;
 
         // Assert
         Assert.Equal(expectedCount, designCount);
@@ -253,11 +253,11 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
     public void RemoveRegion_Failure()
     {
         // Arrange
-        var initialCount = _regionapp.GetAllRegions().Result.Count;
+        var initialCount = ((IApp<Region>)_regionapp).GetAll().Result.Count;
 
         // Act
-        var deleteRegion = _regionapp.DeleteRegion(_regions[0].Id);
-        var finalCount =_regionapp.GetAllRegions().Result.Count;
+        var deleteRegion = ((IApp<Region>)_regionapp).Delete(_regions[0].Id);
+        var finalCount = ((IApp<Region>)_regionapp).GetAll().Result.Count;
 
         // Assert
         Assert.NotEqual(initialCount, finalCount);
@@ -267,11 +267,11 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
     public void RemoveDesignStudio_Failure()
     {
         // Arrange
-        var initialCount = _designStudioApp.GetDesignStudios().Result.Count;
+        var initialCount = ((IApp<DesignStudio>)_designStudioApp).GetAll().Result.Count;
 
         // Act
-        var deleteRegion = _designStudioApp.DeleteDesignStudio(_designStudios[0].Id);
-        var finalCount = _designStudioApp.GetDesignStudios().Result.Count;
+        var deleteRegion = ((IApp<DesignStudio>)_designStudioApp).Delete(_designStudios[0].Id);
+        var finalCount = ((IApp<DesignStudio>)_designStudioApp).GetAll().Result.Count;
 
         // Assert
         Assert.NotEqual(initialCount, finalCount);
@@ -281,11 +281,11 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
     public void RemoveDesignStudio_Success()
     {
         // Arrange
-        var initialCount = _designStudioApp.GetDesignStudios().Result.Count;
+        var initialCount = ((IApp<DesignStudio>)_designStudioApp).GetAll().Result.Count;
 
         // Act
-        var deleteRegion = _designStudioApp.DeleteDesignStudio(_designStudios[0].Id);
-        var finalCount = _designStudioApp.GetDesignStudios().Result.Count;
+        var deleteRegion = ((IApp<DesignStudio>)_designStudioApp).Delete(_designStudios[0].Id);
+        var finalCount = ((IApp<DesignStudio>)_designStudioApp).GetAll().Result.Count;
 
         // Assert
         Assert.Equal(finalCount, (initialCount - 1));
@@ -295,11 +295,11 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
     public void RemoveRegion_Success()
     {
         // Arrange
-        var initialCount = _regionapp.GetAllRegions().Result.Count;
+        var initialCount = ((IApp<Region>)_regionapp).GetAll().Result.Count;
 
         // Act
-        var deleteRegion = _regionapp.DeleteRegion(_regions[0].Id);
-        var finalCount = _regionapp.GetAllRegions().Result.Count;
+        var deleteRegion = ((IApp<Region>)_regionapp).Delete(_regions[0].Id);
+        var finalCount = ((IApp<Region>)_regionapp).GetAll().Result.Count;
 
         // Assert
         Assert.Equal(finalCount, (initialCount - 1));
@@ -310,10 +310,10 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
     public void UpdateRegion_Success()
     {
         // Arrange
-        var updated = _regionapp.UpdateRegion(_regions[0]);
+        var updated = ((IApp<Region>)_regionapp).Update(_regions[0]);
 
         // Act
-        var regionUpdate = _regionapp.UpdateRegion(_regions[0]).Result;
+        var regionUpdate = ((IApp<Region>)_regionapp).Update(_regions[0]).Result;
 
         // Assert
         Assert.Equal(regionUpdate, "Updated Successfully");
@@ -325,10 +325,10 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
     public void UpdateDesignStudio_Success()
     {
         // Arrange
-        var updated = _designStudioApp.UpdateDesignStudio(_designStudios[0]);
+        var updated = ((IApp<DesignStudio>)_designStudioApp).Update(_designStudios[0]);
 
         // Act
-        var designStudioUpdate = _designStudioApp.UpdateDesignStudio(_designStudios[0]).Result;
+        var designStudioUpdate = ((IApp<DesignStudio>)_designStudioApp).Update(_designStudios[0]).Result;
 
         // Assert
         Assert.Equal(designStudioUpdate, "Updated Successfully");
@@ -342,7 +342,7 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
         var expectedId = 1;
 
         // Act
-        var repoId = _regionapp.GetRegion(_regions[0].Id).Result;
+        var repoId = ((IApp<Region>)_regionapp).Get(_regions[0].Id).Result;
 
         // Assert
         Assert.Equal(newRegion, repoId);
@@ -355,7 +355,7 @@ List<DesignStudio> _designStudios = new List<DesignStudio>()
         var expectedId = 1;
 
         // Act
-        var repoId = _designStudioApp.GetDesignStudio(_designStudios[0].Id).Result;
+        var repoId = ((IApp<DesignStudio>)_designStudioApp).Get(_designStudios[0].Id).Result;
 
         // Assert
         Assert.Equal(newDesignStudio, repoId);

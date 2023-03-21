@@ -10,32 +10,14 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 
 namespace API.Controllers;
-public class UsersController : BaseApiController
+public class UsersController : BaseApiAppController<User>
 {
 
     IUserApp _userApp = null;
 
-    public UsersController(IUserApp userApp)
+    public UsersController(IUserApp userApp) : base((IApp<User>) userApp)
     {
         _userApp = userApp;
-    }
-
-
-    [HttpPost("CreateUser")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<bool> CreateUser(User user)
-    {
-
-        return await _userApp.CreateUser(user);
-    }
-
-    [HttpPost("UpdateUser")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<string> UpdateUser(User user)
-    {
-        return await _userApp.UpdateUser(user);
     }
 
     [HttpPost("Validate")]
@@ -47,23 +29,6 @@ public class UsersController : BaseApiController
         return await _userApp.Validate(username, password);
     }
 
-    [HttpPost("Delete")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<bool> DeleteUser(string username)
-    {
-        return await _userApp.DeleteUser(username);
-
-    }
-
-    [HttpGet("AllUsers")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<User>))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<List<User>> AllUsers()
-    {
-        var just = await _userApp.GetUsers();
-        return await _userApp.GetUsers();
-    }
 
     [HttpGet("AllUsersByDesignStudio")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<User>))]
