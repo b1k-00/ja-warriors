@@ -5,9 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain;
-public class Availability
+public class Availability : BaseEntity
 {
-    public int Id { get; set; }
 
     public string startTime { get; set; }
     public string EndTime { get; set; }

@@ -46,8 +46,8 @@ builder.Services.AddScoped<IRegionApp, RegionApp>();
 builder.Services.AddScoped<IGenericRepository<Region>, RegionRepository>();
 builder.Services.AddScoped<IDesignStudioApp, DesignStudioApp>();
 builder.Services.AddScoped<IGenericRepository<DesignStudio>, DesignStudioRepository>();
-builder.Services.AddScoped<IUserAvailabilityRepository, UserAvailabilityRepository>();
-builder.Services.AddScoped<IUserAvailabilityApp, UserAvailabilityApp>(); 
+builder.Services.AddScoped<IGenericRepository<UserAvailability>, UserAvailabilityRepository>();
+builder.Services.AddScoped<IUserAvailabilityApp, UserAvailabilityApp>();
 
 
 //Configure our authentication services to use Amazon Cognito
