@@ -5,6 +5,7 @@ using Domain;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -19,22 +20,22 @@ public class AvailabilityAppTests
         new Availability
         {
             Id = 1,
-            startTime= "11:00 am",
-            EndTime= "12:00 pm",
+            startTime= new DateTime(2023, 01, 03, 10, 00, 00),
+            endTime= new DateTime(2023, 01, 03, 11, 00, 00),
             DayOfTheWeek= 1
         },
         new Availability
         {
             Id = 2,
-            startTime= "1:30 pm",
-            EndTime= "3:00 pm",
+            startTime=new DateTime(2023, 01, 03, 09, 00, 00),
+            endTime= new DateTime(2023, 01, 03, 11, 00, 00),
             DayOfTheWeek= 2
         },
         new Availability
         {
             Id = 3,
-            startTime= "9:00 am",
-            EndTime= "11:00 am",
+            startTime= new DateTime(2023, 01, 03, 08, 00, 00),
+            endTime= new DateTime(2023, 01, 03, 10, 00, 00),
             DayOfTheWeek = 3
         }
     };
@@ -42,8 +43,8 @@ public class AvailabilityAppTests
     Availability newAvailability = new Availability
     {
         Id = 4,
-        startTime = "12:30 pm",
-        EndTime = "2:00 pm",
+        startTime = new DateTime(2023, 01, 03, 03, 00, 00),
+        endTime = new DateTime(2023, 01, 03, 05, 00, 00),
         DayOfTheWeek = 4
     };
 

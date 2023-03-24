@@ -60,7 +60,7 @@ public class AvailabilityApp : AppBase<Availability>, IAvailabilityApp, IApp<Ava
         return result;
     }
 
-    public async Task<List<Availability>> GetAvailabilitybyTime(string startTime, string endTime)
+    public async Task<List<Availability>> GetAvailabilitybyTime(DateTime startTime, DateTime endTime)
     {
         List<Availability> result = new List<Availability>();
         try
