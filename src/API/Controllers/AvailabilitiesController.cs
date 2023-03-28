@@ -23,7 +23,7 @@ public class AvailabilityController : BaseApiAppController<Availability>
     [HttpGet("GetAvailabilityByTime")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Availability>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<List<Availability>> GetAvailabilitybyTime(string startTime, string endTime) //TODO
+    public async Task<List<Availability>> GetAvailabilitybyTime(DateTime startTime, DateTime endTime) 
     {
         return await _availabilityApp.GetAvailabilitybyTime(startTime, endTime);
     }

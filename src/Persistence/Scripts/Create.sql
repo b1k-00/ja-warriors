@@ -1,16 +1,19 @@
 ﻿USE [JAScheduler]
 GO
-/****** Object:  Table [dbo].[Availabilities]    Script Date: 3/14/2023 10:16:02 AM ******/
+
+/****** Object:  Table [dbo].[Availabilities]    Script Date: 3/22/2023 8:33:31 AM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 CREATE TABLE [dbo].[Availabilities](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[StartTime] [varchar](500) NULL,
-	[EndTime] [varchar](500) NULL,
+	[StartTime] [datetime] NULL,
+	[EndTime] [datetime] NULL,
 	[DayOfTheWeek] [int] NULL,
- CONSTRAINT [PK_Availabilities] PRIMARY KEY CLUSTERED
+ CONSTRAINT [PK_Availabilities] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
