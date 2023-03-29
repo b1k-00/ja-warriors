@@ -12,8 +12,8 @@ public interface IAvailabilityApp
 
     Task<List<UserAvailability>> GetUserAvailabilities();
 
-    Task<List<Availability>> GetAvailabilitybyTime(string StartTime, string EndTime);
+    Task<List<Availability>> GetAvailabilitybyTime(DateTime startTime, DateTime endTime);
 
-
+   
 
 }
