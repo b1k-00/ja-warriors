@@ -37,6 +37,7 @@ builder.Services.AddControllers();
 //    .AllowAnyHeader());
 //});
 
+builder.Services.AddHttpContextAccessor();
 //This adds Amazon Cognito as the Identity Provider
 //builder.Services.AddCognitoIdentity();
 
