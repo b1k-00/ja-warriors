@@ -67,12 +67,7 @@ GO
 INSERT INTO [dbo].[Roles]
            ([Name])
      VALUES
-           ('Cohort Leader')
-GO
-INSERT INTO [dbo].[Roles]
-           ([Name])
-     VALUES
-           ('Administration')
+           ('Manager')
 GO
 -- Inserts values to the Design Studios table --
 USE [JAScheduler]
