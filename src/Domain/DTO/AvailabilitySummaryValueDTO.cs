@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Domain.DTO;
 public class AvailabilitySummaryValueDTO
 {
-    public DateTime StartTime { get; set; }
+    public string StartTime { get; set; }
 
     public int UserCount { get; set; }
 }

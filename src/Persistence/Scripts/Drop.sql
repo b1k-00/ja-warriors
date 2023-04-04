@@ -1,5 +1,4 @@
-﻿USE [JAScheduler]
-GO
+﻿
 /****** Object:  Table [dbo].[UserAvailabilities]    Script Date: 3/14/2023 11:17:47 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UserAvailabilities]') AND type in (N'U'))
 DROP TABLE [dbo].[UserAvailabilities]
