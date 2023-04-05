@@ -23,5 +23,6 @@ namespace Domain
         public int? RoleId { get; set; }
         public int Id { get; set; }
         public int DesignStudiosId { get; set; }
+        public Guid AwsId { get; set; }
     }
 }
