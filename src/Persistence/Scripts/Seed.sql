@@ -1,6 +1,5 @@
 ﻿-- Inserts values into the Availabilities table --
-USE [JAScheduler]
-GO
+
 INSERT INTO [dbo].[Availabilities]
            ([StartTime]
            ,[EndTime]
@@ -29,8 +28,7 @@ INSERT INTO [dbo].[Availabilities]
            ,3)
 GO
 -- Inserts values into the Regions table --
-USE [JAScheduler]
-GO
+
 INSERT INTO [dbo].[Regions]
            ([Name])
      VALUES
@@ -57,8 +55,7 @@ INSERT INTO [dbo].[Regions]
            ('West')
 GO
 -- Inserts values to the Roles table --
-USE [JAScheduler]
-GO
+
 INSERT INTO [dbo].[Roles]
            ([Name])
      VALUES
@@ -75,8 +72,7 @@ INSERT INTO [dbo].[Roles]
            ('Administration')
 GO
 -- Inserts values to the Design Studios table --
-USE [JAScheduler]
-GO
+
 INSERT INTO [dbo].[DesignStudios]
            ([Name]
            ,[RegionId])
@@ -134,8 +130,7 @@ INSERT INTO [dbo].[DesignStudios]
            ,4)
 GO
 -- Inserts values into the Users table. --
-USE [JAScheduler]
-GO
+
 INSERT INTO [dbo].[Users]
            ([FirstName]
            ,[MiddleName]
@@ -229,8 +224,7 @@ INSERT INTO [dbo].[Users]
            ,1)
 GO
 -- This inserts values into UserAvailabilities table --
-USE [JAScheduler]
-GO
+
 INSERT INTO [dbo].[UserAvailabilities]
            ([UserId]
            ,[AvailabilityId])
