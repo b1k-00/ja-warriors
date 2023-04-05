@@ -45,49 +45,9 @@ public class AvailabilityController : BaseApiAppController<Availability>
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<List<AvailabilitySummaryDTO>> GetAvailabilitySummary()
     {
-        
-        Random rnd = new Random();
-
-        List<AvailabilitySummaryDTO> result = new List<AvailabilitySummaryDTO>();
-
-        DateTime startTime = new DateTime(2000, 01, 01, 06, 00, 00, DateTimeKind.Utc);
-
-        DateTime endTime = new DateTime(2000, 01, 01, 18, 00, 00, DateTimeKind.Utc);
-
-        List<AvailabilitySummaryValueDTO> userCounts = new List<AvailabilitySummaryValueDTO>();
-
-        int dayOfWeek = 1;
-
-        for (; dayOfWeek <= 5; dayOfWeek++)
-        {
-            AvailabilitySummaryDTO availabilitySummaryDTO = new AvailabilitySummaryDTO();
-
-            availabilitySummaryDTO.DayOfWeek = dayOfWeek;
-
-            startTime = new DateTime(2000, 01, 01, 06, 00, 00, DateTimeKind.Utc);
-
-            while (startTime < endTime)
-            {
-                AvailabilitySummaryValueDTO availabilitySummary = new AvailabilitySummaryValueDTO()
-                {
-
-                    StartTime = startTime,
-                    UserCount = rnd.Next(1, 5),
-
-                };
-                availabilitySummaryDTO.UserCounts.Add(availabilitySummary);
-
-                startTime = startTime.AddMinutes(30);
-
-            }
-
-            result.Add(availabilitySummaryDTO);
-
-        }
-
-        return result;
+        return await _availabilityApp.GetAvailabilitySummary();
     }
-    
+
 }
 
 
