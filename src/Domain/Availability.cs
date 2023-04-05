@@ -13,4 +13,11 @@ public class Availability : BaseEntity
 
     public int? DayOfTheWeek { get; set; }
 
+    public List<UserAvailability> UserCounts { get; set; }
+
+    public Availability()
+    {
+        UserCounts = new List<UserAvailability>();
+    }
+
 }

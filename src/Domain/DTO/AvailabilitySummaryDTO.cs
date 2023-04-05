@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +10,10 @@ public class AvailabilitySummaryDTO
 {
     public int DayOfWeek { get; set; }
 
-    public List<AvailabilitySummaryValueDTO> UserCounts { get; set; }
+    public List<AvailabilitySummaryValueDTO> Summaries { get; set; }
 
     public AvailabilitySummaryDTO()
     {
-        UserCounts = new List<AvailabilitySummaryValueDTO>();
+        Summaries = new List<AvailabilitySummaryValueDTO>();
     }
 }

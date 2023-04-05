@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ public interface IAvailabilityApp
 
     Task<List<Availability>> GetAvailabilitybyTime(DateTime startTime, DateTime endTime);
 
-   
+    Task<List<AvailabilitySummaryDTO>> GetAvailabilitySummary();
+
 
 }
