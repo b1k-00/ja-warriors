@@ -26,6 +26,16 @@ public class UsersController : BaseApiAppController<User>
         _userApp = userApp;
     }
 
+    [HttpPost("Add")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public override async Task<User> Create(User entity)
+    {
+        var aws = await GetJwt();
+        entity.AwsId = new Guid(aws);
+        return await ((IApp<User>)_userApp).Create(entity);
+    }
+
     [HttpPost("Validate")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -48,6 +58,11 @@ public class UsersController : BaseApiAppController<User>
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<string> GetUserNameFromJwt()
+    {   
+        return await GetJwt();
+    }
+
+    private async Task<string> GetJwt()
     {
         string result = "";
 
@@ -62,11 +77,11 @@ public class UsersController : BaseApiAppController<User>
             var tokenS = jsonToken as JwtSecurityToken;
             result = tokenS.Claims.First(claim => claim.Type == "username").Value;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             var stop = 1;
         }
-        
+
         return result;
     }
 }

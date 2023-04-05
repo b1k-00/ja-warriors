@@ -25,7 +25,7 @@ public class BaseApiAppController<T> where T : class
     [HttpPost("Add")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<T> Create(T entity)
+    public virtual async Task<T> Create(T entity)
     {
 
         return await ((IApp<T>)_app).Create(entity);

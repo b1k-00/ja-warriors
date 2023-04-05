@@ -86,7 +86,8 @@ CREATE TABLE [dbo].[Users](
 	[Graduated] [bit] NOT NULL,
 	[GraduatedDate] [date] NULL,
 	[RoleId] [int] NOT NULL,
-	[DesignStudiosId] [int] NOT NULL
+	[DesignStudiosId] [int] NOT NULL,
+	[AwsId] [uniqueidentifier] NOT NULL
  CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED
 (
 	[Id] ASC
