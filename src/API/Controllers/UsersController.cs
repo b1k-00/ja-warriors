@@ -21,7 +21,6 @@ public class UsersController : BaseApiAppController<User>
     public UsersController(IUserApp userApp, IHttpContextAccessor contextAccessor) : base((IApp<User>)userApp)
     {
         _contextAccessor = contextAccessor;
-        //var stop = GetUserNameFromJwt();
         var stop3 = 1;
         _userApp = userApp;
     }
@@ -32,7 +31,10 @@ public class UsersController : BaseApiAppController<User>
     public override async Task<User> Create(User entity)
     {
         var aws = await GetJwt();
-        entity.AwsId = new Guid(aws);
+        if (!string.IsNullOrWhiteSpace(aws))
+        {
+            entity.AwsId = new Guid(aws);
+        }
         return await ((IApp<User>)_userApp).Create(entity);
     }
 
@@ -70,12 +72,16 @@ public class UsersController : BaseApiAppController<User>
         {
             StringValues authorizationToken = "";
 
+           
             var headers = _contextAccessor.HttpContext.Request.Headers.TryGetValue("Authorization", out authorizationToken);
-            var jwtString = authorizationToken.ToString().Replace("Bearer ", "");
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(jwtString);
-            var tokenS = jsonToken as JwtSecurityToken;
-            result = tokenS.Claims.First(claim => claim.Type == "username").Value;
+            if (!string.IsNullOrWhiteSpace(authorizationToken))
+            {
+                var jwtString = authorizationToken.ToString().Replace("Bearer ", "");
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(jwtString);
+                var tokenS = jsonToken as JwtSecurityToken;
+                result = tokenS.Claims.First(claim => claim.Type == "username").Value;
+            }
         }
         catch (Exception ex)
         {
