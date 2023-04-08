@@ -14,6 +14,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{E1E5D9A8-C54E-4604-8AED-84029BAAC6F1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{ACAD4290-0E95-4452-AAE5-253A6A8390DF}"
+	ProjectSection(SolutionItems) = preProject
+		src\Domain\UserAvailability.cs = src\Domain\UserAvailability.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A881191-8113-40C3-B633-3107875DD1EA}"
 	ProjectSection(SolutionItems) = preProject
