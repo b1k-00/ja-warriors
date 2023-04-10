@@ -34,4 +34,17 @@ public class UserAvailabilityApp : IUserAvailabilityApp
         return result;
 
     }
+
+    public async Task AddUserAvailability(int userId, int availabilityId)
+    {
+        UserAvailability userAvailability = new UserAvailability()
+        {
+            UserId = userId,
+            AvailabilityId = availabilityId,
+
+        };
+
+
+        await _userAvailabilityRepo.AddAsync(userAvailability);
+    }
 }

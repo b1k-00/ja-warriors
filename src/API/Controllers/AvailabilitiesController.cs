@@ -1,4 +1,4 @@
-﻿using Application;
+using Application;
 using Application.Interfaces;
 using Application.Persistence;
 using Domain;
@@ -46,6 +46,14 @@ public class AvailabilityController : BaseApiAppController<Availability>
     public async Task<List<AvailabilitySummaryDTO>> GetAvailabilitySummary()
     {
         return await _availabilityApp.GetAvailabilitySummary();
+    }
+
+    [HttpPost("AddUserAvailability")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AvailabilitySummaryDTO>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task AddUserAvailability(int userId, int availabilityId)
+    {
+        await _userAvailabilityApp.AddUserAvailability(userId, availabilityId);
     }
 
 }
