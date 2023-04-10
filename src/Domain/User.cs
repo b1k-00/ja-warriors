@@ -22,5 +22,7 @@ namespace Domain
         public int Id { get; set; }
         public int DesignStudiosId { get; set; }
         public Guid? AwsId { get; set; }
+        [NotMapped]
+        public bool IsManager { get; set; }
     }
 }

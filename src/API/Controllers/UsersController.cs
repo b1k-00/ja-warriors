@@ -90,4 +90,19 @@ public class UsersController : BaseApiAppController<User>
 
         return result;
     }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<User>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public override async Task<List<User>> All()
+    {
+        List<User> result = new List<User>();
+
+        var users = await ((IApp<User>)_userApp).GetAll();
+        foreach (var user in users)
+        {
+            user.IsManager = user.RoleId == 2;
+        }
+        return users;
+    }
 }

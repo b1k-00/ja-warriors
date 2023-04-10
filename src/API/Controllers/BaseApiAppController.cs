@@ -51,7 +51,7 @@ public class BaseApiAppController<T> where T : class
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<User>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<List<T>> All()
+    public virtual async Task<List<T>> All()
     {
         return await ((IApp<T>)_app).GetAll();
     }

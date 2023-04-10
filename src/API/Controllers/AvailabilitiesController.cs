@@ -48,6 +48,14 @@ public class AvailabilityController : BaseApiAppController<Availability>
         return await _availabilityApp.GetAvailabilitySummary();
     }
 
+    [HttpGet("AddUserAvailability")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AvailabilitySummaryDTO>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task AddUserAvailability(int userId, int availabilityId)
+    {
+        await _userAvailabilityApp.AddUserAvailability(userId, availabilityId);
+    }
+
 }
 
 
