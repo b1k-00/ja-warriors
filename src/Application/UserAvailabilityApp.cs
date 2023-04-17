@@ -47,4 +47,31 @@ public class UserAvailabilityApp : IUserAvailabilityApp
 
         await _userAvailabilityRepo.AddAsync(userAvailability);
     }
+
+    public async Task RemoveUserAvailability(int userId, int availabilityId)
+    {
+        var userAvailabilities = await _userAvailabilityRepo.GetAllAsync();
+
+        UserAvailability userAvailabilityRemove = null;
+
+        foreach (UserAvailability userAvailability in userAvailabilities)
+        {
+            if (userId == userAvailability.UserId && availabilityId == userAvailability.AvailabilityId)
+            {
+                userAvailabilityRemove = userAvailability;
+
+                break;
+
+
+            }
+
+        }
+        if (userAvailabilityRemove != null)
+        {
+            await _userAvailabilityRepo.DeleteAsync(userAvailabilityRemove.Id);
+        }
+
+
+
+    }
 }
