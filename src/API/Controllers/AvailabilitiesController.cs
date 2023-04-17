@@ -56,6 +56,67 @@ public class AvailabilityController : BaseApiAppController<Availability>
         await _userAvailabilityApp.AddUserAvailability(userId, availabilityId);
     }
 
+
+    [HttpPost("AddUserAvailabilityByTime")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AvailabilitySummaryDTO>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task AddUserAvailabilityByTime(int userId, string startTime, int dayOfWeek)
+    {
+       var availability = await GetAvailabilityByTime(startTime, dayOfWeek);
+
+        if (availability != null)
+        {
+
+            await _userAvailabilityApp.AddUserAvailability(userId, availability.Id);
+        }
+
+    }
+
+    [HttpPost("RemoveUserAvailabilityByTime")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AvailabilitySummaryDTO>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task RemoveUserAvailabilityByTime(int userId, string startTime, int dayOfWeek)
+    {
+        var availability = await GetAvailabilityByTime(startTime, dayOfWeek);
+
+        if (availability != null)
+        {
+
+            await _userAvailabilityApp.RemoveUserAvailability(userId, availability.Id);
+        }
+
+    }
+
+
+
+    private async Task<Availability> GetAvailabilityByTime(string startTime, int dayOfWeek)
+    {
+        Availability result = null;
+
+        List<Availability> allAvailabilities = await ((IApp<Availability>)_availabilityApp).GetAll();
+
+        DateTime dateTime = DateTime.Now;
+
+        startTime = "1900/01/01 " + startTime;
+
+        DateTime.TryParse(startTime, out dateTime);
+
+        foreach (var availability in allAvailabilities)
+        {
+            if (availability.startTime == dateTime && availability.DayOfTheWeek == dayOfWeek)
+            {
+                result = availability;
+
+                break;
+
+            }
+
+
+        }
+
+        return result;
+    }
+
 }
 
 

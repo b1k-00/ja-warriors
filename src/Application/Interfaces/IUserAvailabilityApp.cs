@@ -12,4 +12,6 @@ public interface IUserAvailabilityApp
     Task<List<UserAvailability>> GetAvailabilitybyUser(int userId);
 
     Task AddUserAvailability(int userId, int availabilityId);
+
+    Task RemoveUserAvailability(int userId, int availabilityId);
 }
